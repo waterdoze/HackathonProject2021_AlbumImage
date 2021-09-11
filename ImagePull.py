@@ -17,10 +17,12 @@ def findImage():
     root = tk.Tk()
     root.withdraw()
     files = filedialog.askopenfilenames()
+    print(files)
     try: 
-        im=Image.open(files)
+        im=Image.open(files[0])
+        
     except IOError:
-        messagebox.showerror("not an image")
+        messagebox.showerror("error","not an image")
     
         
 
