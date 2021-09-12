@@ -13,6 +13,7 @@ import random as rand
 import time
 from pygame import mixer
 
+m = ''
 mixer.pre_init(44100, -16, 1, 512)
 mixer.init()
 choice = 0
@@ -30,29 +31,19 @@ def fix(size1, size2):
         if data_filename.endswith(".jpg") or data_filename.endswith(".png"):
             data_image = cv2.imread(directory + "\\" + data_filename)
             data_image = cv2.resize(data_image, (size1, size2))
-            print()
-            print("base: {}".format(base_file))
             base_image = cv2.imread(base_file)
+            print(data_filename)
             unordereddic, m, s = compare(base_image, data_image, data_filename)
-            org = (30,240)
-            font = cv2.FONT_HERSHEY_SIMPLEX
-            fontScale = 1
-            color = 0, 0, 0
-            thickness = 2
-            text = 'MSE= '+str(m)
-            base_image = cv2.putText(base_image, text, org, font,fontScale, color, thickness, cv2.LINE_AA)
-            color = 255,255,255
-            base_image = cv2.putText(base_image, text, org, font,fontScale, color, thickness, cv2.LINE_AA)
-            numpy_horizontal_concat = np.concatenate((base_image,data_image), axis=1)
-            cv2.imshow('Numpy Horizontal Concat', numpy_horizontal_concat)
-            cv2.waitKey(0)
-
-
+            m = "MSE = " + m
+            album_difference_calculator = np.concatenate((base_image, data_image), axis=1)
+            cv2.imshow('Album Difference Calculator MSE = {}'.format(m), album_difference_calculator)
+            cv2.waitKey(1000)
+            time.sleep(.5)
+            cv2.destroyAllWindows()
         else:
             continue
         sorteddict = dict(sorted(unordereddic.items(), key=lambda kv: kv[1], reverse=False))
     musical_image = list(sorteddict.keys())[0]
-    print(musical_image)
     return musical_image
 
 
@@ -95,8 +86,8 @@ def compare(base_image, data_base_image, data_filename):
     unordereddic[data_filename] = m
     determine_contrast(m, s)
     m = "{:.2f}".format(m)
-    print(f"here it is {m} and this {s}")
-    return unordereddic, m,s
+    print(f"has an MSE of {m} and SSIM  of {s}")
+    return unordereddic, m, s
 
 
 def determine_contrast(measuredse, structdif):
@@ -177,9 +168,9 @@ def playingm(finalvalue):
 
 directory = 'HackathonProject2021_AlbumImage'
 photo = tk.PhotoImage(directory + "\\" + "background.jpg")
-
-labelTextInstructions = Label(master, text = 'Input an Album you Want to Compare!', bg = '#856ff8').pack()
-imagepullerButton = Button(master, text="open file explorer", command=find_image).pack(side= BOTTOM,pady=3)
+labelTextInstructions = Label(master, text='\nInput an Album Cover to Find a Match \nand\n Create a Funky Tune!',
+                              bg='#856ff8').pack()
+imagepullerButton = Button(master, text="open file explorer", command=find_image).pack(side=BOTTOM, pady=3)
 master.protocol("WM_DELETE_WINDOW", on_closing)
 
 master.mainloop()
