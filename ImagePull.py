@@ -1,10 +1,15 @@
 import tkinter as tk
+<<<<<<< HEAD
 from tkinter import *
 from tkinter import messagebox
+=======
+>>>>>>> 150a24cad51e9087110c5905255dd0d0329e3fd6
 from tkinter import filedialog
+from tkinter import messagebox
 from tkinter.ttk import *
-from PIL import ImageTk, Image  
+from PIL import Image
 import sys
+<<<<<<< HEAD
 from skimage.metrics import structural_similarity as ssim
 import matplotlib.pyplot as plt
 import numpy as np
@@ -12,10 +17,15 @@ import cv2
 import sifting
 
 #create canvas
+=======
+import os
+
+>>>>>>> 150a24cad51e9087110c5905255dd0d0329e3fd6
 master = tk.Tk()
 
 master.geometry("400x400")
 
+<<<<<<< HEAD
 #image recoginition
 def start(ImageB):
     master.destroy()
@@ -47,24 +57,45 @@ labelTextInstructions = Label(master,text = " select an image from file explorer
 
 #button to show file explorer
 imagepullerButton = Button(master, text = "open file explorer" , command = findImage).pack(pady = 10)
+=======
 
-#exit
+def find_image():
+    root = tk.Tk()
+    root.withdraw()
+    files = filedialog.askopenfilenames()
+    try:
+        im = Image.open(files)
+    except IOError:
+        messagebox.showerror("not an image")
+
+>>>>>>> 150a24cad51e9087110c5905255dd0d0329e3fd6
+
 def on_closing():
     if messagebox.askokcancel("Quit", "Do you want to quit?"):
         master.destroy()
+
+<<<<<<< HEAD
+master.mainloop()
+
+sys.exit()
+=======
+>>>>>>> 150a24cad51e9087110c5905255dd0d0329e3fd6
+
+labelTextInstructions = Label(master, text="this is main window \n select an image from file explorer").pack(pady=10)
+
+imagepullerButton = Button(master, text="open file explorer", command=find_image).pack(pady=10)
+
 master.protocol("WM_DELETE_WINDOW", on_closing)
 
 master.mainloop()
 
+<<<<<<< HEAD
+
+
+    
+
+
+    
+=======
 sys.exit()
-
-
-
-
-
-
-
-    
-
-
-    
+>>>>>>> 150a24cad51e9087110c5905255dd0d0329e3fd6
